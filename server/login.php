@@ -17,6 +17,7 @@ if(isset($_POST['login'])){
     $user_password = $user_data->password;
     if($password == $user_password ){
       
+      $_SESSION['email'] = $user_data->email;
       $_SESSION['user_name'] = $user_data->first_name;
       echo "login";
      

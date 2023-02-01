@@ -66,5 +66,55 @@
 
       event.preventDefault();
     });
+
+
+
+    // chat box chat-input
+
+    $(".chat-input").submit(function (event) {
+      let message = $('input[name="message"]').val();
+
+      // giving register request to register.php
+      $.ajax({
+        url: "server/chat-process.php",
+        type: "POST",
+        data: {
+          chat: "done",
+          message: message
+        },
+        // after success show alert notification and clear old values from form
+        success: function (res) {
+          $('input[name="message"]').val('');
+          console.log(res);
+        },
+      });
+
+      event.preventDefault();
+    });
+
+
+    // update chat
+
+    setInterval(() => {
+      $.ajax({
+        url: "server/chat-process.php",
+        type: "POST",
+        data: {
+          update_chat: "done",
+        },
+        // after success show alert notification and clear old values from form
+        success: function (res) {
+          $('.messages').html(res);
+        },
+      });
+    }, 1000);
+    
+
+    $('.chat-input input').keyup(function(e) {
+      if ($(this).val() == '')
+        $(this).removeAttr('good');
+      else
+        $(this).attr('good', '');
+    });
   });
 })(jQuery);
